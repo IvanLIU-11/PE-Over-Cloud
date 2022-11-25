@@ -1,8 +1,11 @@
+//所有页面的入口文件
 import 'package:flutter/cupertino.dart';
-import './starter.dart';
-import './clause.dart';
+import 'apps/hellopage.dart';
+import 'apps/clause.dart';
+import 'users/loginpage.dart';
+import 'users/registerpage.dart';
 
-//screens的入口文件
-
-Widget getstartpage() => const StartPage();
+Widget gethellopage() => const HelloPage();
 Widget getclausepage() => const ClausePage();
+Widget getloginpage() => const LoginPage();
+Widget getregisterpage() => const RegisterPage();
