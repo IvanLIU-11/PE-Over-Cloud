@@ -20,7 +20,7 @@ class HelloPage extends StatelessWidget {
 
     //使用定时器定时跳转到登录页面
     Timer(const Duration(seconds: 2), () {
-      Get.toNamed('/login');
+      Get.offNamed('/login');
     });
 
     return Stack(alignment: Alignment.center, children: [
