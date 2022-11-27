@@ -2,7 +2,7 @@
  * @Author: YJR-1100
  * @Date: 2022-11-26 16:02:01
  * @LastEditors: YJR-1100
- * @LastEditTime: 2022-11-26 16:36:29
+ * @LastEditTime: 2022-11-27 11:35:22
  * @FilePath: \PE-Over-Cloud\Client\lib\widgets\PEOCButton.dart
  * @Description: 没有点击效果的文字按钮
  * 
@@ -24,11 +24,14 @@ class PEOCButton {
       child: text ??
           Text(
             msg!,
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: PEOCConfig.THEMECOLOR,
               fontSize: fontsize,
               fontWeight: FontWeight.normal,
               fontFamily: "syhtFamily",
+              height: 1.0,
+              leadingDistribution: TextLeadingDistribution.even,
             ),
           ),
     );

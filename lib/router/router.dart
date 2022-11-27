@@ -1,8 +1,8 @@
 /*
  * @Author: YJR-1100
  * @Date: 2022-11-24 22:34:27
- * @LastEditors: YJR-1100
- * @LastEditTime: 2022-11-26 21:07:17
+ * @LastEditors: IvanLiu
+ * @LastEditTime: 2022-11-27 21:57:05
  * @FilePath: \PE-Over-Cloud\Client\lib\router\router.dart
  * @Description: 路由配置文件
  * 
@@ -24,4 +24,5 @@ List<GetPage> namedPages = [
     name: '/verifycodelogin',
     page: () => getverifycodeloginpage(),
   ),
+  GetPage(name: '/forget', page: () => getforgetpahe()),
 ];

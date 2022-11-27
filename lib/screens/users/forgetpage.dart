@@ -1,11 +1,10 @@
 /*
  * @Author: IvanLiu
  * @LastEditors: IvanLiu
- * @Date: 2022-11-25 15:50:20
- * @LastEditTime: 2022-11-27 22:38:16
+ * @Date: 2022-11-27 21:46:29
+ * @LastEditTime: 2022-11-27 22:33:59
  * @Descripttion: 
  */
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 // ignore: depend_on_referenced_packages
@@ -17,14 +16,14 @@ import 'package:pe_over_cloud/widgets/PEOCiconFont.dart';
 import 'package:pe_over_cloud/utilities/user.dart';
 import 'package:pe_over_cloud/widgets/toastDialog.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class ForgetPage extends StatefulWidget {
+  const ForgetPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<ForgetPage> createState() => _ForgetPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _ForgetPageState extends State<ForgetPage> {
   //分别是手机号，验证码，密码的焦点
   final FocusNode _fnphone = FocusNode();
   final FocusNode _fnverify = FocusNode();
@@ -160,13 +159,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     PEOCText.easyText(
-                      text: '嗨，注册一个账户',
+                      text: '咦，忘记了吗',
                       fontsize: 24.sp,
                     ),
                     PEOCText.easyText(
-                      text: '输入您的手机号和登录密码',
+                      text: '输入您的注册手机号以找回密码',
                       fontsize: 16.sp,
                       color: const Color.fromRGBO(107, 114, 128, 1),
                     ),
@@ -293,7 +293,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '密码',
+                      '新密码',
                       style: TextStyle(
                         fontSize: ScreenUtil().setSp(14),
                         color: Colors.black,
@@ -368,7 +368,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    print("注册");
+                    print("重设密码");
                   },
                   style: ButtonStyle(
                     //去除阴影
@@ -378,7 +378,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         MaterialStateProperty.all(Colors.transparent),
                   ),
                   child: Text(
-                    '注册',
+                    '重设密码',
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(16),
                       color: Colors.white,
@@ -400,7 +400,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '已有账号？',
+                      '想起来了？',
                       style: TextStyle(
                         fontSize: ScreenUtil().setSp(14),
                         color: const Color.fromRGBO(107, 114, 128, 1),
@@ -411,6 +411,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     TextButton(
                       onPressed: () {
+                        _verifyTimer = Timer(const Duration(seconds: 1), () {});
                         Get.offNamed('/login');
                       },
                       style: ButtonStyle(
@@ -520,9 +521,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void dispose() {
     super.dispose();
-
     _verifyTimer?.cancel();
-
     _fnpaswd.dispose();
     _fnphone.dispose();
     _fnverify.dispose();

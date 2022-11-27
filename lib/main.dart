@@ -1,13 +1,22 @@
 /*
+ * @Author: IvanLiu
+ * @LastEditors: IvanLiu
+ * @Date: 2022-11-24 22:31:38
+ * @LastEditTime: 2022-11-27 15:08:20
+ * @Descripttion: 
+ */
+
+/*
  * @Author: YJR-1100
  * @Date: 2022-11-24 22:34:27
  * @LastEditors: YJR-1100
- * @LastEditTime: 2022-11-26 21:07:30
+ * @LastEditTime: 2022-11-27 14:44:43
  * @FilePath: \PE-Over-Cloud\Client\lib\main.dart
  * @Description: 
  * 
  * Copyright (c) 2022 by yjr-1100/CSU, All Rights Reserved. 
  */
+
 import 'package:flutter/material.dart';
 import 'config/peocdesign.dart';
 import 'package:get/get.dart';
