@@ -2,7 +2,7 @@
  * @Author: IvanLiu
  * @LastEditors: IvanLiu
  * @Date: 2022-11-27 21:46:29
- * @LastEditTime: 2022-11-28 13:47:25
+ * @LastEditTime: 2022-11-28 17:30:23
  * @Descripttion: 
  */
 import 'package:flutter/material.dart';
@@ -195,37 +195,47 @@ class _ForgetPageState extends State<ForgetPage> {
                         fontWeight: FontWeight.normal,
                       ),
                     ),
-                    Material(
-                      child: Container(
-                        height: 56.h,
-                        width: 327.w,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
-                                //选中与否觉得边框颜色
-                                color: isPhoneFocused
-                                    ? PEOCConfig.THEMECOLOR
-                                    : const Color.fromRGBO(107, 114, 128, 1),
-                                width: ScreenUtil().setSp(1)),
-                            borderRadius: BorderRadius.circular(
-                                (ScreenUtil().setSp(12)))),
-                        child: TextField(
-                          controller: phoneController,
-                          focusNode: _fnphone,
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                                borderSide: BorderSide.none),
-                            prefixText: "+86 ",
-                            prefixStyle: TextStyle(
-                              color: !isPhoneFocused
-                                  ? const Color.fromARGB(255, 138, 144, 154)
-                                  : PEOCConfig.THEMECOLOR,
+                    Expanded(
+                      child: Material(
+                        child: Container(
+                          height: 56.h,
+                          width: 327.w,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                  //选中与否觉得边框颜色
+                                  color: isPhoneFocused
+                                      ? PEOCConfig.THEMECOLOR
+                                      : const Color.fromRGBO(107, 114, 128, 1),
+                                  width: ScreenUtil().setSp(1)),
+                              borderRadius: BorderRadius.circular(
+                                  (ScreenUtil().setSp(12)))),
+                          child: TextField(
+                            controller: phoneController,
+                            focusNode: _fnphone,
+                            style: TextStyle(
+                              color: const Color.fromRGBO(17, 24, 39, 1),
                               fontSize: 18.sp,
                               fontWeight: FontWeight.normal,
                               fontFamily: "syhtFamily",
                             ),
+                            decoration: InputDecoration(
+                              isCollapsed: true,
+                              border: const OutlineInputBorder(
+                                  borderSide: BorderSide.none),
+                              prefixText: "+86 ",
+                              prefixStyle: TextStyle(
+                                color: !isPhoneFocused
+                                    ? const Color.fromARGB(255, 138, 144, 154)
+                                    : PEOCConfig.THEMECOLOR,
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.normal,
+                                fontFamily: "syhtFamily",
+                              ),
+                            ),
+                            keyboardType: TextInputType.number,
                           ),
-                          keyboardType: TextInputType.number,
                         ),
                       ),
                     ),
@@ -254,26 +264,37 @@ class _ForgetPageState extends State<ForgetPage> {
                         fontWeight: FontWeight.normal,
                       ),
                     ),
-                    Material(
-                      child: Container(
-                        height: 56.h,
-                        width: 327.w,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
-                                color: isVerifyFocused
-                                    ? PEOCConfig.THEMECOLOR
-                                    : const Color.fromRGBO(107, 114, 128, 1),
-                                width: ScreenUtil().setSp(1)),
-                            borderRadius: BorderRadius.circular(
-                                (ScreenUtil().setSp(12)))),
-                        child: TextField(
-                          focusNode: _fnverify,
-                          decoration: const InputDecoration(
-                            border:
-                                OutlineInputBorder(borderSide: BorderSide.none),
+                    Expanded(
+                      child: Material(
+                        child: Container(
+                          height: 56.h,
+                          width: 327.w,
+                          padding: EdgeInsets.fromLTRB(12.w, 0, 12.w, 0),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                  color: isVerifyFocused
+                                      ? PEOCConfig.THEMECOLOR
+                                      : const Color.fromRGBO(107, 114, 128, 1),
+                                  width: ScreenUtil().setSp(1)),
+                              borderRadius: BorderRadius.circular(
+                                  (ScreenUtil().setSp(12)))),
+                          child: TextField(
+                            focusNode: _fnverify,
+                            style: TextStyle(
+                              color: const Color.fromRGBO(17, 24, 39, 1),
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.normal,
+                              fontFamily: "syhtFamily",
+                            ),
+                            decoration: const InputDecoration(
+                              isCollapsed: true,
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide.none),
+                            ),
+                            keyboardType: TextInputType.number,
                           ),
-                          keyboardType: TextInputType.number,
                         ),
                       ),
                     ),
@@ -289,6 +310,7 @@ class _ForgetPageState extends State<ForgetPage> {
                 width: 327.w,
                 height: 77.h,
                 color: Colors.white,
+                alignment: Alignment.center,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -302,52 +324,64 @@ class _ForgetPageState extends State<ForgetPage> {
                         fontWeight: FontWeight.normal,
                       ),
                     ),
-                    Material(
-                      child: Container(
-                        height: 56.h,
-                        width: 327.w,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
+                    Expanded(
+                      child: Material(
+                        child: Container(
+                          width: 327.w,
+                          height: 56.h,
+                          padding: EdgeInsets.fromLTRB(12.w, 0, 12.w, 0),
+                          decoration: BoxDecoration(
                             border: Border.all(
-                                color: isPaswdFocused
-                                    ? PEOCConfig.THEMECOLOR
-                                    : const Color.fromRGBO(107, 114, 128, 1),
-                                width: ScreenUtil().setSp(1)),
-                            borderRadius: BorderRadius.circular(
-                                (ScreenUtil().setSp(12)))),
-                        child: TextField(
-                          controller: pwdController,
-                          obscureText: !_showpwd,
-                          focusNode: _fnpaswd,
-                          decoration: InputDecoration(
-                              hintText: "6~18位数字，字母和符号的组合",
-                              hintStyle: const TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontFamily: "syhtFamily",
-                                height: 1.0,
-                                leadingDistribution:
-                                    TextLeadingDistribution.even,
-                                decoration: TextDecoration.none,
-                              ),
-                              border: const OutlineInputBorder(
-                                  borderSide: BorderSide.none),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _showpwd
-                                      ? PEOCiconFont.closeeyeFont
-                                      : PEOCiconFont.eyeFont,
-                                  color: !isPaswdFocused
-                                      ? const Color.fromRGBO(156, 163, 175, 1)
-                                      : PEOCConfig.THEMECOLOR,
-                                  size: 22.sp,
+                              color: isPaswdFocused
+                                  ? PEOCConfig.THEMECOLOR
+                                  : const Color.fromRGBO(107, 114, 128, 1),
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: TextField(
+                                  // 输入框
+                                  controller: pwdController,
+                                  focusNode: _fnpaswd,
+                                  obscureText: !_showpwd, // 是否隐藏文本，即密码类型
+                                  style: TextStyle(
+                                    color: const Color.fromRGBO(17, 24, 39, 1),
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily: "syhtFamily",
+                                  ),
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    isCollapsed: true,
+                                  ),
+                                  keyboardType: TextInputType.visiblePassword,
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    _showpwd = !_showpwd;
-                                  });
-                                },
-                              )),
-                          keyboardType: TextInputType.number,
+                              ),
+                              Container(
+                                width: 24.w,
+                                margin: EdgeInsets.fromLTRB(5.w, 4.5.h, 5.w, 0),
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      _showpwd = !_showpwd;
+                                    });
+                                  },
+                                  child: Icon(
+                                    _showpwd
+                                        ? PEOCiconFont.closeeyeFont
+                                        : PEOCiconFont.eyeFont,
+                                    color: !isPaswdFocused
+                                        ? const Color.fromRGBO(156, 163, 175, 1)
+                                        : PEOCConfig.THEMECOLOR,
+                                    size: 22.sp,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -355,7 +389,7 @@ class _ForgetPageState extends State<ForgetPage> {
                 ),
               ),
             ),
-            //注册按钮
+            //重置密码按钮
             Positioned(
               left: 26.w,
               top: 543.h,
