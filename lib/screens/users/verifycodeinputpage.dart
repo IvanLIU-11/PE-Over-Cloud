@@ -2,7 +2,7 @@
  * @Author: YJR-1100
  * @Date: 2022-11-26 20:58:55
  * @LastEditors: IvanLiu
- * @LastEditTime: 2022-11-27 23:00:11
+ * @LastEditTime: 2022-11-28 13:43:53
  * @FilePath: \PE-Over-Cloud\Client\lib\screens\users\verifycodeinputpage.dart
  * @Description: 验证码的输入页面
  * 
@@ -204,6 +204,8 @@ class _VerifyCodeInputPageState extends State<VerifyCodeInputPage> {
                                   MaterialStateProperty.all(EdgeInsets.zero),
                               backgroundColor:
                                   MaterialStateProperty.all(Colors.white),
+                              //取消按钮水波纹
+                              splashFactory: NoSplash.splashFactory,
                             ),
                             child: Text(
                               //根据可否获得验证码更改textbutton的显示字符和颜色

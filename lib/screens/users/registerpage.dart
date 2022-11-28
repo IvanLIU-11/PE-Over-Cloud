@@ -2,7 +2,7 @@
  * @Author: IvanLiu
  * @LastEditors: IvanLiu
  * @Date: 2022-11-25 15:50:20
- * @LastEditTime: 2022-11-27 22:38:16
+ * @LastEditTime: 2022-11-28 13:43:05
  * @Descripttion: 
  */
 
@@ -347,7 +347,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   });
                                 },
                               )),
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.visiblePassword,
                         ),
                       ),
                     ),
@@ -477,6 +477,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     minimumSize: MaterialStateProperty.all(const Size(1, 1)),
                     padding: MaterialStateProperty.all(EdgeInsets.zero),
                     backgroundColor: MaterialStateProperty.all(Colors.white),
+                    //取消按钮水波纹
+                    splashFactory: NoSplash.splashFactory,
                   ),
                   child: Text(
                     //根据可否获得验证码更改textbutton的显示字符和颜色
