@@ -2,12 +2,18 @@
  * @Author: YJR-1100
  * @Date: 2022-11-25 08:42:01
  * @LastEditors: IvanLiu
- * @LastEditTime: 2022-11-27 16:22:19
+ * @LastEditTime: 2023-01-19 10:33:58
  * @FilePath: \PE-Over-Cloud\Client\lib\utilities\user.dart
  * @Description: 用户的一些业务逻辑函数
  * 
  * Copyright (c) 2022 by yjr-1100/CSU, All Rights Reserved. 
  */
+
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:pe_over_cloud/config/peocdesign.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 /// 判断是否是手机号
 bool isphonenum(String phonenum) {
@@ -24,6 +30,78 @@ bool isrightpwd(String pwd) {
   return matched;
 }
 
-void userPhonenumPwdLogin(String phonenum, String pwd) {
-  print("登录");
+// 注册
+
+/// 发送注册验证码
+Future<dynamic> sendUserVerifycodeRegister(String phonenum) async {
+  // 加载动画
+  SmartDialog.showLoading(
+      isLoadingTemp: false, background: const Color.fromARGB(196, 44, 44, 44));
+
+  // 发送验证码
+  var res = await PEOCConfig.dio
+      .get('/reg/send/mes', queryParameters: {'u_phone': phonenum});
+  var response = res.data;
+  print(response);
+  return response;
+}
+
+/// 发送注册请求
+Future<dynamic> userRegister(
+    String phonenum, String pwd, String verifycode) async {
+  // 加载动画
+  SmartDialog.showLoading(
+      isLoadingTemp: false, background: const Color.fromARGB(196, 44, 44, 44));
+
+  // 发送请求
+  var res = await PEOCConfig.dio.post('/reg/result',
+      data: jsonEncode(
+          {"u_phone": phonenum, "password": pwd, "verify_code": verifycode}));
+  var response = res.data;
+  print(response);
+  return response;
+}
+
+// 登录
+
+/// 密码登录
+Future<dynamic> userPhonenumPwdLogin(String phonenum, String pwd) async {
+  // 加载动画
+  SmartDialog.showLoading(
+      isLoadingTemp: false, background: const Color.fromARGB(196, 44, 44, 44));
+
+  // 发送请求
+  var res = await PEOCConfig.dio.post('/login/password',
+      data: jsonEncode({"u_phone": phonenum, "password": pwd}));
+  var response = res.data;
+  print(response);
+  return response;
+}
+
+/// 发送登录验证码
+Future<dynamic> sendUserVerifycode(String phonenum) async {
+  // 加载动画
+  SmartDialog.showLoading(
+      isLoadingTemp: false, background: const Color.fromARGB(196, 44, 44, 44));
+
+  // 发送验证码
+  var res = await PEOCConfig.dio
+      .get('/login/send/mes', queryParameters: {'u_phone': phonenum});
+  var response = res.data;
+  print(response);
+  return response;
+}
+
+/// 验证码登录
+Future<dynamic> userVerifycodeLogin(String phonenum, String Verifycode) async {
+  // 加载动画
+  SmartDialog.showLoading(
+      isLoadingTemp: false, background: const Color.fromARGB(196, 44, 44, 44));
+
+  // 发送验证码
+  var res = await PEOCConfig.dio.post('/login/message',
+      data: jsonEncode({"u_phone": phonenum, "verifycode": Verifycode}));
+  var response = res.data;
+  print(response);
+  return response;
 }

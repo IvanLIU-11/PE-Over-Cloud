@@ -39,6 +39,8 @@ dependencies:
   flutter_screenutil: ^5.0.1
   #getX
   get:
+  #获取本地图片
+  wechat_assets_picker: ^8.3.1
 
 dev_dependencies:
   flutter_test:
@@ -51,7 +53,15 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   fluttertoast: ^8.0.9
+  flutter_smart_dialog: ^3.3.0
   pin_code_fields: ^7.4.0
+  flutter_swiper_view: ^1.1.8
+  video_player: ^2.4.8
+  image_picker: ^0.8.6
+  shared_preferences: ^2.0.15
+  http: ^0.13.5
+  dio: ^4.0.6
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -83,6 +93,10 @@ flutter:
       fonts:
         - asset: asset/font/SourceHanSansCN-Normal.ttf
 
+    - family: syhtMediumFamily
+      fonts:
+        - asset: asset/font/SourceHanSansCN-Medium.ttf
+
     - family: ysbthFamily
       fonts:
         - asset: asset/font/YouSheBiaoTiHei-2.ttf
@@ -90,6 +104,18 @@ flutter:
     - family: loginpageFont
       fonts:
         - asset: asset/font/loginpagefont.ttf
+    
+    - family: chachaFont
+      fonts:
+        - asset: asset/font/chacha.ttf
+
+    - family: homepageIcon
+      fonts:
+        - asset: asset/font/homepageicon.ttf
+
+    - family: bottombarIcon
+      fonts:
+        - asset: asset/font/bottombaricon.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

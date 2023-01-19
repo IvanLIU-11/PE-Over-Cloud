@@ -2,7 +2,7 @@
  * @Author: IvanLiu
  * @LastEditors: IvanLiu
  * @Date: 2022-11-24 22:31:38
- * @LastEditTime: 2022-11-27 15:08:20
+ * @LastEditTime: 2023-01-18 20:53:02
  * @Descripttion: 
  */
 
@@ -18,12 +18,17 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'config/peocdesign.dart';
 import 'package:get/get.dart';
 import 'router/router.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 void main() {
-// 设计图尺寸
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    //设置状态栏颜色,本是灰色，现在完全为沉浸式
+    statusBarColor: Colors.transparent,
+  ));
   runApp(const MyApp());
 }
 
@@ -38,6 +43,7 @@ class MyApp extends StatelessWidget {
       getPages: namedPages,
       title: PEOCConfig.APPNAME,
       debugShowCheckedModeBanner: false,
+      builder: FlutterSmartDialog.init(),
       theme: ThemeData(
         primarySwatch: PEOCConfig.createMaterialColor(PEOCConfig.THEMECOLOR),
         primaryColor: PEOCConfig.THEMECOLOR,

@@ -2,7 +2,7 @@
  * @Author: YJR-1100
  * @Date: 2022-11-24 22:34:27
  * @LastEditors: IvanLiu
- * @LastEditTime: 2022-11-27 21:57:05
+ * @LastEditTime: 2023-01-18 20:54:34
  * @FilePath: \PE-Over-Cloud\Client\lib\router\router.dart
  * @Description: 路由配置文件
  * 
@@ -25,4 +25,9 @@ List<GetPage> namedPages = [
     page: () => getverifycodeloginpage(),
   ),
   GetPage(name: '/forget', page: () => getforgetpahe()),
+  GetPage(name: '/main', page: () => getmainpage()),
+  GetPage(name: '/usertype', page: () => getusertypepage()),
+  GetPage(name: '/athleteinfo', page: () => getathleteinfopage()),
+  GetPage(name: '/coachinfo', page: () => getcoachinfopage()),
+  GetPage(name: '/amateurinfo', page: () => getamateurinfopage()),
 ];

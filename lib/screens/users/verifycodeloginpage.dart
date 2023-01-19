@@ -2,20 +2,22 @@
  * @Author: YJR-1100
  * @Date: 2022-11-26 20:58:28
  * @LastEditors: YJR-1100
- * @LastEditTime: 2022-11-27 14:38:11
+ * @LastEditTime: 2023-01-04 18:43:25
  * @FilePath: \PE-Over-Cloud\Client\lib\screens\users\verifycodeloginpage.dart
- * @Description: 
+ * @Description: 使用验证码登录的页面
  * 
  * Copyright (c) 2022 by yjr-1100/CSU, All Rights Reserved. 
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pe_over_cloud/config/peocdesign.dart';
-import 'package:get/get.dart';
 import 'package:pe_over_cloud/widgets/PEOCText.dart';
-import '../../widgets/PEOCButton.dart';
-import '../../widgets/toastDialog.dart';
-import '../../utilities/user.dart';
+import 'package:get/get.dart';
+import 'package:pe_over_cloud/widgets/PEOCButton.dart';
+import 'package:pe_over_cloud/widgets/toastDialog.dart';
+import 'package:pe_over_cloud/widgets/PEOCAppBar.dart';
+import 'package:pe_over_cloud/utilities/user.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 class VerifyCodeLoginPage extends StatefulWidget {
   const VerifyCodeLoginPage({super.key});
@@ -65,31 +67,10 @@ class _VerifyCodeLoginPageState extends State<VerifyCodeLoginPage> {
           PEOCConfig.DESIGNEDWIDTH, PEOCConfig.DESIGNEDHEIGHT), // 传入设计图尺寸
     );
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(64.h),
-        child: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: Container(
-            height: 64.h,
-            margin: EdgeInsets.fromLTRB(0, 16.h, 0, 8.h),
-            // color: Colors.yellow,
-            child: InkWell(
-              // 前面左侧的图标
-              child: SizedBox(
-                width: 40.w,
-                child: Icon(
-                  Icons.arrow_back_ios_new,
-                  color: Colors.black,
-                  size: ScreenUtil().setSp(20),
-                ),
-              ),
-              onTap: () {
-                Get.offNamed('/login');
-              },
-            ),
-          ),
-        ),
+      appBar: PEOCAppBar.easyAppBar(
+        ontap: () {
+          Get.back();
+        },
       ),
       body: GestureDetector(
         onTap: (() {
@@ -143,7 +124,7 @@ class _VerifyCodeLoginPageState extends State<VerifyCodeLoginPage> {
                         ? const Color.fromRGBO(156, 163, 175, 1)
                         : PEOCConfig.THEMECOLOR,
                   ),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: Row(
                   children: [
@@ -189,9 +170,21 @@ class _VerifyCodeLoginPageState extends State<VerifyCodeLoginPage> {
                                   msg: "请输入正确的手机号",
                                   fontsize: ScreenUtil().setSp(14));
                             } else {
-                              //TODO: 判断手机号有没有注册过注册过再跳转
-                              print("发送验证码");
-                              Get.toNamed('/verifycodeinput');
+                              // debugPrint("发送验证码");
+                              // 发送验证码
+                              sendUserVerifycode(phoneController.text)
+                                  .then((res) {
+                                var code = res["code"];
+                                var message = res["message"];
+                                SmartDialog.dismiss(
+                                    status: SmartStatus.loading);
+                                if (code == 200) {
+                                  Get.toNamed('/verifycodeinput',
+                                      arguments: phoneController.text);
+                                } else {
+                                  showmessage(msg: message, fontsize: 14.sp);
+                                }
+                              });
                             }
                           }),
                     ),

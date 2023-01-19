@@ -2,7 +2,7 @@
  * @Author: YJR-1100
  * @Date: 2022-11-25 08:53:32
  * @LastEditors: IvanLiu
- * @LastEditTime: 2022-11-27 21:52:17
+ * @LastEditTime: 2023-01-18 21:24:22
  * @FilePath: \PE-Over-Cloud\Client\lib\screens\users\loginpage.dart
  * @Description: 登录页面
  * 
@@ -20,6 +20,7 @@ import 'package:pe_over_cloud/widgets/PEOCText.dart';
 import 'package:pe_over_cloud/widgets/PEOCiconFont.dart';
 import 'package:pe_over_cloud/widgets/toastDialog.dart';
 import 'package:pe_over_cloud/utilities/user.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 // import 'package:get/get.dart';
 class LoginPage extends StatefulWidget {
@@ -43,6 +44,8 @@ class _LoginPageState extends State<LoginPage> {
   final pwdController = TextEditingController();
   // 防止频繁点击
   DateTime _lastPopTime = DateTime.now();
+  // 是否加载登录按钮
+  final bool _isLoading = false;
 
   @override
   void initState() {
@@ -343,9 +346,19 @@ class _LoginPageState extends State<LoginPage> {
                           } else if (pwdController.text.isEmpty) {
                             showmessage(msg: "请输入密码", fontsize: 14.sp);
                           } else {
-                            // TODO: 登录
                             userPhonenumPwdLogin(
-                                phoneController.text, pwdController.text);
+                                    phoneController.text, pwdController.text)
+                                .then((res) {
+                              var code = res["code"];
+                              var message = res["message"];
+                              SmartDialog.dismiss(status: SmartStatus.loading);
+                              if (code == 200) {
+                                showmessage(msg: "登录成功", fontsize: 14.sp);
+                                Get.offAllNamed('/usertype');
+                              } else {
+                                showmessage(msg: message, fontsize: 14.sp);
+                              }
+                            });
                           }
                         } else {
                           _lastPopTime = DateTime.now();
@@ -404,7 +417,7 @@ class _LoginPageState extends State<LoginPage> {
                         InkWell(
                           onTap: () {
                             // TODO：拉起微信登录
-                            print("微信登录");
+                            debugPrint("微信登录");
                           },
                           child: Container(
                             height: 24.h,
@@ -420,7 +433,7 @@ class _LoginPageState extends State<LoginPage> {
                         InkWell(
                           onTap: () {
                             //TODO: 拉起QQ登录
-                            print("QQ登录");
+                            debugPrint("QQ登录");
                           },
                           child: Container(
                             height: 24.h,

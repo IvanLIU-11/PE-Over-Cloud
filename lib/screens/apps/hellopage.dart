@@ -2,7 +2,7 @@
  * @Author: IvanLiu
  * @LastEditors: IvanLiu
  * @Date: 2022-11-25 15:50:20
- * @LastEditTime: 2022-11-27 16:29:43
+ * @LastEditTime: 2023-01-18 20:57:46
  * @Descripttion: 
  */
 import 'package:flutter/material.dart';
@@ -26,8 +26,9 @@ class HelloPage extends StatelessWidget {
     );
 
     //使用定时器定时跳转到登录页面
-    Timer(const Duration(seconds: 2), () {
-      Get.offNamed('/login');
+    Timer.periodic(const Duration(seconds: 2), (timer) {
+      Get.offAllNamed('/login');
+      timer.cancel();
     });
 
     return Stack(alignment: Alignment.center, children: [

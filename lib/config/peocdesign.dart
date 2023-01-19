@@ -1,6 +1,6 @@
 //有关设计稿的信息
-import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 
 class PEOCConfig {
   // ignore: constant_identifier_names
@@ -22,7 +22,7 @@ class PEOCConfig {
     for (int i = 1; i < 10; i++) {
       strengths.add(0.1 * i);
     }
-    strengths.forEach((strength) {
+    for (var strength in strengths) {
       final double ds = 0.5 - strength;
       swatch[(strength * 1000).round()] = Color.fromRGBO(
         r + ((ds < 0 ? r : (255 - r)) * ds).round(),
@@ -30,7 +30,21 @@ class PEOCConfig {
         b + ((ds < 0 ? b : (255 - b)) * ds).round(),
         1,
       );
-    });
+    }
     return MaterialColor(color.value, swatch);
   }
+
+  static const String SERVERIP = "47.110.82.236:8080";
+
+  static Dio dio = Dio(BaseOptions(
+    baseUrl: 'http://47.110.82.236:8080',
+    headers: {
+      "content-type": "application/json",
+      'accept': '*/*',
+      'accept-language': 'zh-CN',
+      'accept-encoding': 'gzip,deflate,br',
+    },
+    connectTimeout: 5000,
+    receiveTimeout: 3000,
+  ));
 }

@@ -2,7 +2,7 @@
  * @Author: IvanLiu
  * @LastEditors: IvanLiu
  * @Date: 2022-11-25 15:50:20
- * @LastEditTime: 2022-11-28 17:31:48
+ * @LastEditTime: 2023-01-19 10:22:47
  * @Descripttion: 
  */
 
@@ -16,6 +16,7 @@ import 'package:pe_over_cloud/widgets/PEOCText.dart';
 import 'package:pe_over_cloud/widgets/PEOCiconFont.dart';
 import 'package:pe_over_cloud/utilities/user.dart';
 import 'package:pe_over_cloud/widgets/toastDialog.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -35,6 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isPaswdFocused = false;
 
   final phoneController = TextEditingController(); //控制手机号输入内容
+  final verifyController = TextEditingController(); //控制验证码输入内容
   final pwdController = TextEditingController(); //控制密码输入内容
 
   //获取验证码的计时器
@@ -49,6 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void initState() {
     super.initState();
     phoneController.text = "";
+    verifyController.text = "";
     pwdController.text = "";
     //焦点添加监听器相应焦点变化
     _fnphone.addListener(() {
@@ -142,7 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
                                 ),
                                 onTap: () {
-                                  Get.offNamed('/login');
+                                  Get.back();
                                 },
                               ),
                             ))),
@@ -287,6 +290,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               fontFamily: "syhtFamily",
                             ),
                             focusNode: _fnverify,
+                            controller: verifyController,
                             decoration: const InputDecoration(
                               isCollapsed: true,
                               border: OutlineInputBorder(
@@ -401,7 +405,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    print("注册");
+                    debugPrint("注册");
+
+                    userRegister(phoneController.text, pwdController.text,
+                            verifyController.text)
+                        .then((res) {
+                      SmartDialog.dismiss(status: SmartStatus.loading);
+                      showmessage(msg: res["message"], fontsize: 14.sp);
+                    });
                   },
                   style: ButtonStyle(
                     //去除阴影
@@ -444,7 +455,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Get.offNamed('/login');
+                        Get.offAllNamed('/login');
                       },
                       style: ButtonStyle(
                         minimumSize:
@@ -497,13 +508,18 @@ class _RegisterPageState extends State<RegisterPage> {
                                 msg: "请输入手机号",
                                 fontsize: ScreenUtil().setSp(14));
                             return;
-                          }
-                          if (!isphonenum(phoneController.text)) {
+                          } else if (!isphonenum(phoneController.text)) {
                             // 手机号格式不正确
                             showmessage(
                                 msg: "手机号格式错误",
                                 fontsize: ScreenUtil().setSp(14));
                             return;
+                          } else {
+                            sendUserVerifycodeRegister(phoneController.text)
+                                .then((res) {
+                              SmartDialog.dismiss(status: SmartStatus.loading);
+                              showmessage(msg: res["message"], fontsize: 14.sp);
+                            });
                           }
                         },
                   style: ButtonStyle(
@@ -540,7 +556,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void startCountdownTimer() {
     const oneSec = Duration(seconds: 1);
 
-    var callback = (timer) => {
+    callback(timer) => {
           setState(() {
             if (_verifyTimeCounter < 1) {
               _verifyTimer?.cancel();
@@ -562,6 +578,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _fnphone.dispose();
     _fnverify.dispose();
     phoneController.dispose();
+    verifyController.dispose();
     pwdController.dispose();
   }
 }

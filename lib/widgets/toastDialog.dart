@@ -2,7 +2,7 @@
  * @Author: YJR-1100
  * @Date: 2022-11-26 10:51:21
  * @LastEditors: YJR-1100
- * @LastEditTime: 2022-11-26 16:03:17
+ * @LastEditTime: 2022-11-28 14:58:18
  * @FilePath: \PE-Over-Cloud\Client\lib\widgets\toastDialog.dart
  * @Description: 消息弹框
  * 
@@ -11,7 +11,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../config/peocdesign.dart';
+import 'package:pe_over_cloud/config/peocdesign.dart';
 
 void showmessage({required String msg, required double fontsize}) {
   Fluttertoast.cancel();

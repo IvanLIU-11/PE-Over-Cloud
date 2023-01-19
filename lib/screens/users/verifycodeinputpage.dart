@@ -1,10 +1,10 @@
 /*
  * @Author: YJR-1100
  * @Date: 2022-11-26 20:58:55
- * @LastEditors: IvanLiu
- * @LastEditTime: 2022-11-28 13:43:53
+ * @LastEditors: YJR-1100
+ * @LastEditTime: 2023-01-04 19:04:57
  * @FilePath: \PE-Over-Cloud\Client\lib\screens\users\verifycodeinputpage.dart
- * @Description: 验证码的输入页面
+ * @Description: 验证码登录时验证码的输入页面
  * 
  * Copyright (c) 2022 by yjr-1100/CSU, All Rights Reserved. 
  */
@@ -13,10 +13,14 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pe_over_cloud/widgets/PEOCText.dart';
-import '../../config/peocdesign.dart';
-import 'package:get/get.dart';
+import 'package:pe_over_cloud/widgets/PEOCAppBar.dart';
+import 'package:pe_over_cloud/config/peocdesign.dart';
 // ignore: depend_on_referenced_packages
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:get/get.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:pe_over_cloud/utilities/user.dart';
+import 'package:pe_over_cloud/widgets/toastDialog.dart';
 
 class VerifyCodeInputPage extends StatefulWidget {
   const VerifyCodeInputPage({Key? key}) : super(key: key);
@@ -32,11 +36,16 @@ class _VerifyCodeInputPageState extends State<VerifyCodeInputPage> {
   Timer? _verifyTimer;
   //获取验证码的倒计时时间，同时也是能否获得验证码的标志，=0即可
   int _verifyTimeCounter = 60;
+  String _phonenum = "";
 
   @override
   void initState() {
     super.initState();
     startCountdownTimer(); //进入此页面就表示已经发送验证码，直接开始倒计时
+
+    if (Get.arguments != null) {
+      _phonenum = Get.arguments;
+    }
   }
 
   @override
@@ -48,30 +57,9 @@ class _VerifyCodeInputPageState extends State<VerifyCodeInputPage> {
     );
 
     return Scaffold(
-      appBar: PreferredSize(
-          preferredSize: Size.fromHeight(64.h),
-          child: AppBar(
-              backgroundColor: Colors.white,
-              elevation: 0,
-              leading: Container(
-                height: 64.h,
-                margin: EdgeInsets.fromLTRB(0, 16.h, 0, 8.h),
-                // color: Colors.yellow,
-                child: InkWell(
-                  // 前面左侧的图标
-                  child: SizedBox(
-                    height: 40.w,
-                    child: Icon(
-                      Icons.arrow_back_ios_new,
-                      color: Colors.black,
-                      size: 20.sp,
-                    ),
-                  ),
-                  onTap: () {
-                    Get.offNamed('/verifycodelogin');
-                  },
-                ),
-              ))),
+      appBar: PEOCAppBar.easyAppBar(ontap: () {
+        Get.back();
+      }),
       body: GestureDetector(
         onTap: (() {
           // _focusNodephone.unfocus();
@@ -103,7 +91,7 @@ class _VerifyCodeInputPageState extends State<VerifyCodeInputPage> {
                         width: 328.w,
                         height: 24.h,
                         child: PEOCText.easyText(
-                          text: "我们已经发送验证码到您的手机号",
+                          text: "我们已经发送验证码到$_phonenum上",
                           fontsize: 16.sp,
                           color: const Color.fromRGBO(107, 114, 128, 1),
                         ),
@@ -149,6 +137,20 @@ class _VerifyCodeInputPageState extends State<VerifyCodeInputPage> {
                     onCompleted: (v) {
                       //TODO: 输入完验证码的回调
                       debugPrint("全部输完的回调函数");
+                      userVerifycodeLogin(_phonenum, _currentText).then((res) {
+                        var code = res["code"];
+                        var message = res["message"];
+                        SmartDialog.dismiss(status: SmartStatus.loading);
+                        if (code == 200) {
+                          showmessage(msg: "登录成功", fontsize: 14.sp);
+                          Get.offAllNamed('/main');
+                        } else {
+                          showmessage(msg: message, fontsize: 14.sp);
+                          if (message == "该手机号尚未注册") {
+                            Get.offNamed('/register', arguments: _phonenum);
+                          }
+                        }
+                      });
                     },
                     onChanged: (value) {
                       //TODO：内容改变的回调
@@ -195,6 +197,15 @@ class _VerifyCodeInputPageState extends State<VerifyCodeInputPage> {
                                     startCountdownTimer();
                                     setState(() {
                                       _verifyTimeCounter = 60;
+                                    });
+                                    // 重新发送验证码
+                                    sendUserVerifycode(_phonenum).then((res) {
+                                      var code = res["code"];
+                                      var message = res["message"];
+                                      SmartDialog.dismiss(
+                                          status: SmartStatus.loading);
+                                      showmessage(
+                                          msg: message, fontsize: 14.sp);
                                     });
                                   },
                             style: ButtonStyle(
@@ -243,7 +254,7 @@ class _VerifyCodeInputPageState extends State<VerifyCodeInputPage> {
   void startCountdownTimer() {
     const oneSec = Duration(seconds: 1);
 
-    var callback = (timer) => {
+    callback(timer) => {
           setState(() {
             if (_verifyTimeCounter < 1) {
               _verifyTimer?.cancel();

@@ -1,8 +1,8 @@
 /*
  * @Author: IvanLiu
- * @LastEditors: IvanLiu
+ * @LastEditors: YJR-1100
  * @Date: 2022-11-27 21:46:29
- * @LastEditTime: 2022-11-28 17:30:23
+ * @LastEditTime: 2023-01-04 18:43:14
  * @Descripttion: 
  */
 import 'package:flutter/material.dart';
@@ -141,7 +141,7 @@ class _ForgetPageState extends State<ForgetPage> {
                                   ),
                                 ),
                                 onTap: () {
-                                  Get.offNamed('/login');
+                                  Get.back();
                                 },
                               ),
                             ))),
@@ -402,7 +402,7 @@ class _ForgetPageState extends State<ForgetPage> {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    print("重设密码");
+                    debugPrint("重设密码");
                   },
                   style: ButtonStyle(
                     //去除阴影
@@ -446,7 +446,7 @@ class _ForgetPageState extends State<ForgetPage> {
                     TextButton(
                       onPressed: () {
                         _verifyTimer = Timer(const Duration(seconds: 1), () {});
-                        Get.offNamed('/login');
+                        Get.back();
                       },
                       style: ButtonStyle(
                         minimumSize:
@@ -543,7 +543,7 @@ class _ForgetPageState extends State<ForgetPage> {
   void startCountdownTimer() {
     const oneSec = Duration(seconds: 1);
 
-    var callback = (timer) => {
+    callback(timer) => {
           setState(() {
             if (_verifyTimeCounter < 1) {
               _verifyTimer?.cancel();
