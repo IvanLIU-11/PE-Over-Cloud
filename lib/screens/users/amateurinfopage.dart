@@ -2,16 +2,19 @@
  * @Author: IvanLiu
  * @LastEditors: IvanLiu
  * @Date: 2023-01-10 22:27:30
- * @LastEditTime: 2023-01-19 22:23:20
+ * @LastEditTime: 2023-02-06 21:52:32
  * @Descripttion: 业余爱好者信息界面
  */
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pe_over_cloud/config/peocdesign.dart';
+import 'package:pe_over_cloud/utilities/user.dart';
 import 'package:pe_over_cloud/widgets/PEOCBottomPopUp.dart';
 import 'package:pe_over_cloud/widgets/PEOCText.dart';
 import 'package:pe_over_cloud/widgets/PEOCiconFont.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:pe_over_cloud/widgets/toastDialog.dart';
 
 class AmateurInfoPage extends StatefulWidget {
   const AmateurInfoPage({super.key});
@@ -600,7 +603,16 @@ class _AmateurInfoPageState extends State<AmateurInfoPage> {
                       width: PEOCConfig.DESIGNEDWIDTH.w,
                       height: 21.h,
                       padding: EdgeInsets.fromLTRB(_leftPadding, 0, 0, 0),
-                      child: PEOCText.easyText(text: "爱好项目", fontsize: 14.sp),
+                      child: Row(
+                        children: [
+                          PEOCText.easyText(text: "爱好项目", fontsize: 14.sp),
+                          PEOCText.easyText(
+                            text: "(可多选)",
+                            fontsize: 12.sp,
+                            color: const Color.fromRGBO(177, 177, 177, 1),
+                          )
+                        ],
+                      ),
                     ),
 
                     SizedBox(
@@ -1752,7 +1764,106 @@ class _AmateurInfoPageState extends State<AmateurInfoPage> {
                           onPressed: () {
                             //TODO:跳到主页
                             if (_isFinished) {
-                              print("下一步");
+                              String birthday =
+                                  "${2023 - yearsIndex}-${monthsIndex + 1}-${daysIndex + 1}";
+
+                              String sport = "";
+                              if (_isLikeBasketball) {
+                                sport = "$sport篮球";
+                              }
+                              if (_isLikeFootball) {
+                                sport = "${sport}_足球";
+                              }
+                              if (_isLikeTianjin) {
+                                sport = "${sport}_田径";
+                              }
+                              if (_isLikeVolleyball) {
+                                sport = "${sport}_排球";
+                              }
+                              if (_isLikeSwim) {
+                                sport = "${sport}_游泳";
+                              }
+                              if (_isLikeBadminton) {
+                                sport = "${sport}_羽毛球";
+                              }
+                              if (_isLikePingpong) {
+                                sport = "${sport}_乒乓";
+                              }
+
+                              String cause = "";
+                              if (_isForJianZhi) {
+                                cause = "$cause减脂";
+                              }
+                              if (_isForZenji) {
+                                cause = "${cause}_增肌";
+                              }
+                              if (_isForHealthy) {
+                                cause = "${cause}_保持健康";
+                              }
+                              if (_isForOthers) {
+                                cause = "${cause}_其他";
+                              }
+
+                              int experience = 0;
+                              if (_isNoExp) {
+                                experience = 0;
+                              } else if (_is1To3Exp) {
+                                experience = 1;
+                              } else if (_is3MoreExp) {
+                                experience = 2;
+                              }
+
+                              String injury = "";
+                              if (_isShoulderInjury) {
+                                injury = "$injury肩部";
+                              }
+                              if (_isHandInjury) {
+                                injury = "${injury}_手部";
+                              }
+                              if (_isWaistInjury) {
+                                injury = "${injury}_腰部";
+                              }
+                              if (_isLegInjury) {
+                                injury = "${injury}_腿膝部";
+                              }
+                              if (_isFootInjury) {
+                                injury = "${injury}_脚部";
+                              }
+                              if (_isOtherInjury) {
+                                injury = "${injury}_其他";
+                              }
+                              // print(nameController.text);
+                              // print(_isMan);
+                              // print(birthday);
+                              // print(sport);
+                              // print(cause);
+                              // print(locationController.text);
+                              // print(experience);
+                              // print(injury);
+                              amateurInforUpdate(
+                                      nameController.text,
+                                      _isMan,
+                                      birthday,
+                                      sport,
+                                      cause,
+                                      locationController.text,
+                                      experience,
+                                      injury)
+                                  .then((res) {
+                                var code = res["code"];
+                                var message = res["message"];
+                                SmartDialog.dismiss(
+                                    status: SmartStatus.loading);
+                                if (code == 200) {
+                                  //写入成功了
+                                  showmessage(msg: message, fontsize: 14.sp);
+                                  Get.offNamed("/main");
+                                } else {
+                                  //写入失败
+                                  showmessage(msg: message, fontsize: 14.sp);
+                                }
+                              });
+                              
                             }
                           },
                           style: ButtonStyle(

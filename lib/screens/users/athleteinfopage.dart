@@ -2,7 +2,7 @@
  * @Author: IvanLiu
  * @LastEditors: IvanLiu
  * @Date: 2023-01-10 22:26:39
- * @LastEditTime: 2023-01-19 22:23:12
+ * @LastEditTime: 2023-02-06 20:53:14
  * @Descripttion: 运动员信息界面
  */
 
@@ -13,6 +13,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pe_over_cloud/utilities/getpicture.dart';
 import 'package:get/get.dart';
 import 'package:pe_over_cloud/config/peocdesign.dart';
+import 'package:pe_over_cloud/utilities/user.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:pe_over_cloud/widgets/PEOCBottomPopUp.dart';
 import 'package:pe_over_cloud/widgets/PEOCText.dart';
 import 'package:pe_over_cloud/widgets/PEOCiconFont.dart';
@@ -2445,9 +2447,103 @@ class _AthleteInfoPageState extends State<AthleteInfoPage> {
                           ),
                           child: ElevatedButton(
                             onPressed: () {
-                              //TODO:跳到主页
+                              //TODO:提交信息并跳到主页
                               if (_isFinished) {
-                                print("下一步");
+                                String birthday =
+                                    "${2023 - yearsIndex}-${monthsIndex + 1}-${daysIndex + 1}";
+                                String sport = _sportsItem[sportItemIndex];
+                                int teamtype = 0;
+                                if (_isPersonalTrain) {
+                                  teamtype = 0;
+                                } else if (_isSchoolTrain) {
+                                  teamtype = 1;
+                                } else if (_isProfessionalTrain) {
+                                  teamtype = 2;
+                                }
+                                String education =
+                                    _educationItem[educationIndex];
+                                String athletecertificate = "未获得运动员证书";
+                                if (!_isGetAthleteCertificate) {
+                                  athletecertificate = "未获得运动员证书";
+                                } else if (_isFirstGrade) {
+                                  athletecertificate = "一级运动员";
+                                } else if (_isSecondGrade) {
+                                  athletecertificate = "二级运动员";
+                                } else if (_isMasterSportMan) {
+                                  athletecertificate = "运动健将";
+                                }
+                                String awards = "";
+                                if (firstresultController.text.isNotEmpty) {
+                                  awards = awards + firstresultController.text;
+                                }
+                                if (secondresultController.text.isNotEmpty) {
+                                  awards =
+                                      "${awards}_${secondresultController.text}";
+                                }
+                                if (thirdresultController.text.isNotEmpty) {
+                                  awards =
+                                      "${awards}_${thirdresultController.text}";
+                                }
+                                if (fourthresultController.text.isNotEmpty) {
+                                  awards =
+                                      "${awards}_${fourthresultController.text}";
+                                }
+                                if (fifthresultController.text.isNotEmpty) {
+                                  awards =
+                                      "${awards}_${fifthresultController.text}";
+                                }
+                                String injury = "";
+                                if (_isShoulderInjury) {
+                                  injury = "$injury肩部";
+                                }
+                                if (_isHandInjury) {
+                                  injury = "${injury}_手部";
+                                }
+                                if (_isWaistInjury) {
+                                  injury = "${injury}_腰部";
+                                }
+                                if (_isLegInjury) {
+                                  injury = "${injury}_腿膝部";
+                                }
+                                if (_isFootInjury) {
+                                  injury = "${injury}_脚部";
+                                }
+                                if (_isOtherInjury) {
+                                  injury = "${injury}_其他";
+                                }
+
+                                if (_isUploadPhoto) {
+                                  //TODO：上传了运动员证书图片
+
+                                }
+
+                                athleteInforUpdate(
+                                        nameController.text,
+                                        _isMan,
+                                        birthday,
+                                        sport,
+                                        _isProfessional,
+                                        teamtype,
+                                        schoolController.text,
+                                        education,
+                                        locationController.text,
+                                        athletecertificate,
+                                        awards,
+                                        injury)
+                                    .then((res) {
+                                  var code = res["code"];
+                                  var message = res["message"];
+                                  SmartDialog.dismiss(
+                                      status: SmartStatus.loading);
+                                  if (code == 200) {
+                                    //写入成功了
+                                    showmessage(msg: message, fontsize: 14.sp);
+                                    Get.offNamed("/main");
+                                  } else {
+                                    //写入失败
+                                    showmessage(msg: message, fontsize: 14.sp);
+                                  }
+                                });
                               }
                             },
                             style: ButtonStyle(

@@ -2,7 +2,7 @@
  * @Author: IvanLiu
  * @LastEditors: IvanLiu
  * @Date: 2023-01-09 10:49:30
- * @LastEditTime: 2023-01-19 22:25:58
+ * @LastEditTime: 2023-02-06 21:31:16
  * @Descripttion: 用户选择自己的类别，初始登陆后弹出
  */
 import 'package:flutter/material.dart';
@@ -85,19 +85,19 @@ class _UserTypePageState extends State<UserTypePage> {
                   borderRadius: BorderRadius.circular(12),
                   color: (_is_amateur | _is_athlete | _is_coach)
                       ? PEOCConfig.THEMECOLOR
-                      : const Color.fromRGBO(89, 89, 89, 1),
+                      : const Color.fromRGBO(196, 196, 196, 1),
                 ),
                 child: ElevatedButton(
                   //TODO:跳转到对应页面
                   onPressed: () {
                     if (_is_athlete) {
-                      Get.offNamed('/athleteinfo');
+                      Get.toNamed('/athleteinfo');
                     }
                     if (_is_coach) {
-                      Get.offNamed('/coachinfo');
+                      Get.toNamed('/coachinfo');
                     }
                     if (_is_amateur) {
-                      Get.offNamed('/amateurinfo');
+                      Get.toNamed('/amateurinfo');
                     }
                   },
                   style: ButtonStyle(

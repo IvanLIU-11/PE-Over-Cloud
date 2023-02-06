@@ -2,7 +2,7 @@
  * @Author: YJR-1100
  * @Date: 2022-11-26 10:51:21
  * @LastEditors: YJR-1100
- * @LastEditTime: 2022-11-28 14:58:18
+ * @LastEditTime: 2023-02-05 20:12:47
  * @FilePath: \PE-Over-Cloud\Client\lib\widgets\toastDialog.dart
  * @Description: 消息弹框
  * 
@@ -12,6 +12,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pe_over_cloud/config/peocdesign.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void showmessage({required String msg, required double fontsize}) {
   Fluttertoast.cancel();
@@ -27,61 +29,28 @@ void showmessage({required String msg, required double fontsize}) {
       );
 }
 
-// class MyDialog extends Dialog {
-//   final String title;
-//   final String content;
-//   final Function? onTap;
-//   const MyDialog(
-//       {Key? key,
-//       required this.title,
-//       required this.content,
-//       required this.onTap})
-//       : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     return Material(
-//       type: MaterialType.transparency, // 设置背景透明
-//       child: Center(
-//         // 包裹一个center组件，不然会全屏
-//         child: Container(
-//           height: 300,
-//           width: 300,
-//           color: Colors.white,
-//           child: Column(children: [
-//             Padding(
-//                 padding: const EdgeInsets.all(5),
-//                 child: Stack(children: [
-//                   Align(
-//                     alignment: Alignment.centerLeft,
-//                     child: Text(title),
-//                   ),
-//                   Align(
-//                     alignment: Alignment.centerLeft,
-//                     child: InkWell(
-//                       // flutter中专门让点击的事件
-//                       onTap: onTap,
-//                       child: const Icon(Icons.close),
-//                     ),
-//                   ),
-//                 ])),
-//             const Divider(),
-//             SizedBox(
-//               width: double.infinity,
-//               child: Text(content),
-//             )
-//           ]),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
-// void _myDialog(){
-//   showDialog(context:context,builder:(context){
-//     return MyDialog(title:"提示",content:"我是内容"
-//     onTap:(){
-//       print("点了");
-//     });
-//   })
-// }
+void showicontoast({Widget? widget}) {
+  SmartDialog.show(
+      alignmentTemp: Alignment.center,
+      isPenetrateTemp: false,
+      maskColorTemp: const Color.fromRGBO(0, 0, 0, 0.25),
+      keepSingle: true,
+      widget: Container(
+        height: 150.h,
+        width: 150.h,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 111, 111, 111),
+            borderRadius: BorderRadius.circular(8.r),
+            boxShadow: [
+              BoxShadow(
+                color: const Color.fromARGB(126, 96, 96, 96).withOpacity(0.1),
+                spreadRadius: 0.0,
+                blurRadius: 5,
+                offset: const Offset(0, 3),
+              ),
+            ]),
+        child: Center(child: widget),
+      ),
+      isUseAnimationTemp: false);
+}

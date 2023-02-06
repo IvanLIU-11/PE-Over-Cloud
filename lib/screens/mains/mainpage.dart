@@ -2,7 +2,7 @@
  * @Author: YJR-1100
  * @Date: 2022-12-02 20:45:09
  * @LastEditors: YJR-1100
- * @LastEditTime: 2022-12-02 21:28:03
+ * @LastEditTime: 2023-02-04 14:46:06
  * @FilePath: \PE-Over-Cloud\Client\lib\screens\mains\mainpage.dart
  * @Description: 一个盒子，根据bottomnavigationbar切换内容
  * 
@@ -10,7 +10,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:pe_over_cloud/widgets/PECOBottomNavigarionBar.dart';
+import 'package:pe_over_cloud/widgets/PEOCBottomNavigarionBar.dart';
 import 'package:pe_over_cloud/screens/allscreens.dart';
 
 class MainPage extends StatefulWidget {
@@ -23,18 +23,18 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final List<Widget> _pages = [
     getgoodspage(), // 周边
-    getsocialpage(), // 圈子
-    gethomepage(), // 首页
     gethealthrecoverypage(), // 康复
+    gethomepage(), // 首页
+    gettrainingroompage(), // 训练房
     getuserinfopage() // 我的
   ];
-  int _currentindex = 2;
+  int _currentindex = 3;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_currentindex],
-      bottomNavigationBar: PECOBottomNavigationBar(
+      bottomNavigationBar: PEOCBottomNavigationBar(
           ontap: (index) {
             setState(() {
               _currentindex = index;

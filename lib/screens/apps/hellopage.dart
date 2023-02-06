@@ -2,7 +2,7 @@
  * @Author: IvanLiu
  * @LastEditors: IvanLiu
  * @Date: 2022-11-25 15:50:20
- * @LastEditTime: 2023-01-18 20:57:46
+ * @LastEditTime: 2023-02-06 23:58:06
  * @Descripttion: 
  */
 import 'package:flutter/material.dart';
@@ -11,6 +11,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pe_over_cloud/config/peocdesign.dart';
 import 'package:get/get.dart';
 import 'dart:async';
+
+import 'package:pe_over_cloud/utilities/storage.dart';
+import 'package:pe_over_cloud/utilities/user.dart';
 
 //应用启动页
 
@@ -26,9 +29,21 @@ class HelloPage extends StatelessWidget {
     );
 
     //使用定时器定时跳转到登录页面
-    Timer.periodic(const Duration(seconds: 2), (timer) {
-      Get.offAllNamed('/login');
-      timer.cancel();
+    Timer.periodic(const Duration(seconds: 2), (timer) async {
+      
+      String currentPhone = await getCurrenLoginAccountPhone();
+      String currentPwd = await getCurrenLoginAccountPwd();
+
+      if (currentPhone.isNotEmpty && currentPwd.isNotEmpty) {
+        //当前有登陆的账号，直接登录
+        Get.offNamed('/main');
+        getTokenPeriodic(currentPhone, currentPwd);
+        timer.cancel();
+      } else {
+        //当前没有登陆的账号，去登陆
+        Get.offAllNamed('/login');
+        timer.cancel();
+      }
     });
 
     return Stack(alignment: Alignment.center, children: [

@@ -1,9 +1,9 @@
 /*
  * @Author: YJR-1100
  * @Date: 2022-11-25 23:43:12
- * @LastEditors: IvanLiu
- * @LastEditTime: 2023-01-18 20:59:31
- * @FilePath: \PE-Over-Cloud\Client\lib\PEOCiconFont.dart
+ * @LastEditors: YJR-1100
+ * @LastEditTime: 2023-02-05 16:14:08
+ * @FilePath: \PE-Over-Cloud\Client\lib\widgets\PEOCiconFont.dart
  * @Description: 自定义图标文件
  * 
  * Copyright (c) 2022 by yjr-1100/CSU, All Rights Reserved. 
@@ -57,8 +57,37 @@ class PEOCiconFont {
       fontFamily: "bottombarIcon", matchTextDirection: true); // 康复
   static const IconData quanzi = IconData(0xe605,
       fontFamily: "bottombarIcon", matchTextDirection: true); // 圈子
+  static const IconData xiaoxi = IconData(0xe630,
+      fontFamily: "bottombarIcon", matchTextDirection: true); // 训练房
   static const IconData userwode = IconData(0xe68d,
       fontFamily: "bottombarIcon", matchTextDirection: true); // 我的
   static const IconData chachaFont =
       IconData(0xe609, fontFamily: "chachaFont", matchTextDirection: true);
+
+  // 聊天页面相关图标
+  static const IconData gobackFont = IconData(0xe61a,
+      fontFamily: "chaticonFont", matchTextDirection: true); // 返回
+  static const IconData emojiFont = IconData(0xe663,
+      fontFamily: "chaticonFont", matchTextDirection: true); // 表情
+  static const IconData deleteFont = IconData(0xe621,
+      fontFamily: "chaticonFont", matchTextDirection: true); // 删除
+  static const IconData voiceFont = IconData(0xe8f7,
+      fontFamily: "chaticonFont", matchTextDirection: true); // 语音
+  static const IconData voicecancelFont = IconData(0xe904,
+      fontFamily: "chaticonFont", matchTextDirection: true); // 语音撤回
+  static const IconData copyFont = IconData(0xe617,
+      fontFamily: "chaticonFont", matchTextDirection: true); // 复制
+  static const IconData backspaceFont = IconData(0xe610,
+      fontFamily: "chaticonFont", matchTextDirection: true); // 退格
+  static const IconData pluscircleFont = IconData(0xe616,
+      fontFamily: "chaticonFont", matchTextDirection: true); // 圈圈加号
+  static const IconData editFont = IconData(0xe61d,
+      fontFamily: "chaticonFont", matchTextDirection: true); // 编辑
+  static const IconData redoFont = IconData(0xea1a,
+      fontFamily: "chaticonFont", matchTextDirection: true); // 转发
+  static const IconData jianpanFont = IconData(0xe661,
+      fontFamily: "chaticonFont", matchTextDirection: true); // 键盘
+  static const IconData chosemoreFont = IconData(0xe607,
+      fontFamily: "chaticonFont", matchTextDirection: true); // 多选
+
 }

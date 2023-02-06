@@ -13,9 +13,16 @@
       "unicode_decimal": 58906
     },
     {
+      "icon_id": "765611",
+      "name": "消息",
+      "font_class": "shouye1",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
       "icon_id": "5905716",
       "name": "首页",
-      "font_class": "shouye1",
+      "font_class": "shouye2",
       "unicode": "e62c",
       "unicode_decimal": 58924
     },

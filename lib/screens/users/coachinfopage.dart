@@ -2,7 +2,7 @@
  * @Author: IvanLiu
  * @LastEditors: IvanLiu
  * @Date: 2023-01-10 22:26:39
- * @LastEditTime: 2023-01-19 22:22:51
+ * @LastEditTime: 2023-02-06 21:52:25
  * @Descripttion: 教练员信息界面
  */
 import 'dart:io';
@@ -12,10 +12,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pe_over_cloud/utilities/getpicture.dart';
 import 'package:get/get.dart';
 import 'package:pe_over_cloud/config/peocdesign.dart';
+import 'package:pe_over_cloud/utilities/user.dart';
 import 'package:pe_over_cloud/widgets/PEOCBottomPopUp.dart';
 import 'package:pe_over_cloud/widgets/PEOCText.dart';
 import 'package:pe_over_cloud/widgets/PEOCiconFont.dart';
 import 'package:pe_over_cloud/widgets/toastDialog.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 class CoachInfoPage extends StatefulWidget {
   const CoachInfoPage({super.key});
@@ -146,27 +148,37 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
 
   //各类信息
   bool _isMan = true;
+
   bool _isPersonalTrain = true;
   bool _isSchoolTrain = false;
   bool _isProfessionalTrain = false;
+
   bool _isPersonalCoach = true;
   bool _isSchoolCoach = false;
   bool _isProfessionalCoach = false;
+
   bool _isGetAthleteCertificate = false;
-  bool _isGetCoachCertificate = false;
-  bool _isGetRefereeCertificate = false;
   bool _isFirstGradeAthlete = true;
   bool _isSecondGradeAthlete = false;
   bool _isMasterSportMan = false;
+
+  bool _isGetCoachCertificate = false;
   bool _isFirstGradeCoach = true;
   bool _isSecondGradeCoach = false;
   bool _isThirdGradeCoach = false;
+
+  bool _isGetRefereeCertificate = false;
+  bool _isFirstGradeReferee = true;
+  bool _isSecondGradeReferee = false;
+  bool _isNationalGradeReferee = false;
+
   bool _isShoulderInjury = false;
   bool _isHandInjury = false;
   bool _isWaistInjury = false;
   bool _isLegInjury = false;
   bool _isFootInjury = false;
   bool _isOtherInjury = false;
+
   bool _isUploadAthletePhoto = false;
   bool _isUploadCoachPhoto = false;
   bool _isUploadRefereePhoto = false;
@@ -2252,7 +2264,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                         height: 21.h,
                         padding: EdgeInsets.fromLTRB(_leftPadding, 0, 0, 0),
                         child: PEOCText.easyText(
-                            text: "是否获得裁判员员证书", fontsize: 14.sp),
+                            text: "是否获得裁判员证书", fontsize: 14.sp),
                       ),
 
                       SizedBox(
@@ -2353,6 +2365,151 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                         visible: _isGetRefereeCertificate,
                         child: Column(
                           children: [
+                            SizedBox(
+                              width: PEOCConfig.DESIGNEDWIDTH.w,
+                              height: _rowSpacing,
+                            ),
+
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              width: PEOCConfig.DESIGNEDWIDTH.w,
+                              height: 21.h,
+                              padding:
+                                  EdgeInsets.fromLTRB(_leftPadding, 0, 0, 0),
+                              child: PEOCText.easyText(
+                                  text: "裁判员证书等级", fontsize: 14.sp),
+                            ),
+
+                            SizedBox(
+                              width: PEOCConfig.DESIGNEDWIDTH.w,
+                              height: _titleButtonSpacing,
+                            ),
+
+                            //裁判员证书选择按钮
+                            Container(
+                              width: PEOCConfig.DESIGNEDWIDTH.w,
+                              height: 33.h,
+                              padding: EdgeInsets.fromLTRB(
+                                  _leftPadding, 0, _rightPadding, 0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  //一级按钮
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _isFirstGradeReferee = true;
+                                        _isSecondGradeReferee = false;
+                                        _isNationalGradeReferee = false;
+                                      });
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: 100.w,
+                                      height: 33.h,
+                                      decoration: BoxDecoration(
+                                          color: _isFirstGradeReferee
+                                              ? PEOCConfig.THEMECOLOR
+                                              : Colors.transparent,
+                                          border: Border.all(
+                                            //选中与否决定边框颜色
+                                            color: _isFirstGradeReferee
+                                                ? PEOCConfig.THEMECOLOR
+                                                : const Color.fromRGBO(
+                                                    177, 177, 177, 1),
+                                            width: ScreenUtil().setSp(1),
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              _bordercircular)),
+                                      child: PEOCText.easyText(
+                                        text: "一级",
+                                        fontsize: 14.sp,
+                                        color: _isFirstGradeReferee
+                                            ? Colors.white
+                                            : const Color.fromRGBO(
+                                                177, 177, 177, 1),
+                                      ),
+                                    ),
+                                  ),
+                                  //二级按钮
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _isFirstGradeReferee = false;
+                                        _isSecondGradeReferee = true;
+                                        _isNationalGradeReferee = false;
+                                      });
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: 100.w,
+                                      height: 33.h,
+                                      decoration: BoxDecoration(
+                                          color: _isSecondGradeReferee
+                                              ? PEOCConfig.THEMECOLOR
+                                              : Colors.transparent,
+                                          border: Border.all(
+                                            //选中与否决定边框颜色
+                                            color: _isSecondGradeReferee
+                                                ? PEOCConfig.THEMECOLOR
+                                                : const Color.fromRGBO(
+                                                    177, 177, 177, 1),
+                                            width: ScreenUtil().setSp(1),
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              _bordercircular)),
+                                      child: PEOCText.easyText(
+                                        text: "二级",
+                                        fontsize: 14.sp,
+                                        color: _isSecondGradeReferee
+                                            ? Colors.white
+                                            : const Color.fromRGBO(
+                                                177, 177, 177, 1),
+                                      ),
+                                    ),
+                                  ),
+                                  //国家级裁判按钮
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _isFirstGradeReferee = false;
+                                        _isSecondGradeReferee = false;
+                                        _isNationalGradeReferee = true;
+                                      });
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: 100.w,
+                                      height: 33.h,
+                                      decoration: BoxDecoration(
+                                          color: _isNationalGradeReferee
+                                              ? PEOCConfig.THEMECOLOR
+                                              : Colors.transparent,
+                                          border: Border.all(
+                                            //选中与否决定边框颜色
+                                            color: _isNationalGradeReferee
+                                                ? PEOCConfig.THEMECOLOR
+                                                : const Color.fromRGBO(
+                                                    177, 177, 177, 1),
+                                            width: ScreenUtil().setSp(1),
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              _bordercircular)),
+                                      child: PEOCText.easyText(
+                                        text: "国家级",
+                                        fontsize: 14.sp,
+                                        color: _isNationalGradeReferee
+                                            ? Colors.white
+                                            : const Color.fromRGBO(
+                                                177, 177, 177, 1),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
                             SizedBox(
                               width: PEOCConfig.DESIGNEDWIDTH.w,
                               height: _rowSpacing,
@@ -3177,7 +3334,160 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                             onPressed: () {
                               //TODO:跳到主页
                               if (_isFinished) {
-                                print("下一步");
+                                String birthday =
+                                    "${2023 - yearsIndex}-${monthsIndex + 1}-${daysIndex + 1}";
+                                String sport = _sportsItem[sportItemIndex];
+
+                                int careerYear =
+                                    int.tryParse(eduyearsController.text) ?? 0;
+
+                                int coachtype = 0;
+                                if (_isPersonalCoach) {
+                                  coachtype = 0;
+                                } else if (_isSchoolCoach) {
+                                  coachtype = 1;
+                                } else if (_isProfessionalCoach) {
+                                  coachtype = 2;
+                                }
+
+                                int teamtype = 0;
+                                if (_isPersonalTrain) {
+                                  teamtype = 0;
+                                } else if (_isSchoolTrain) {
+                                  teamtype = 1;
+                                } else if (_isProfessionalTrain) {
+                                  teamtype = 2;
+                                }
+                                String education =
+                                    _educationItem[educationIndex];
+                                String athletecertificate = "未获得运动员证书";
+                                if (!_isGetAthleteCertificate) {
+                                  athletecertificate = "未获得运动员证书";
+                                } else if (_isFirstGradeAthlete) {
+                                  athletecertificate = "一级运动员";
+                                } else if (_isSecondGradeAthlete) {
+                                  athletecertificate = "二级运动员";
+                                } else if (_isMasterSportMan) {
+                                  athletecertificate = "运动健将";
+                                }
+                                String coachcertificate = "未获得教练员证书";
+                                if (!_isGetCoachCertificate) {
+                                  coachcertificate = "未获得教练员证书";
+                                } else if (_isFirstGradeCoach) {
+                                  coachcertificate = "初级教练员";
+                                } else if (_isSecondGradeCoach) {
+                                  coachcertificate = "中级教练员";
+                                } else if (_isThirdGradeCoach) {
+                                  coachcertificate = "高级教练员";
+                                }
+                                String refereecertificate = "未获得裁判员证书";
+                                if (!_isGetRefereeCertificate) {
+                                  refereecertificate = "未获得裁判员证书";
+                                } else if (_isFirstGradeReferee) {
+                                  refereecertificate = "一级裁判员";
+                                } else if (_isSecondGradeReferee) {
+                                  refereecertificate = "二级裁判员";
+                                } else if (_isNationalGradeReferee) {
+                                  refereecertificate = "国家级裁判员";
+                                }
+                                String awards = "";
+                                if (firstresultController.text.isNotEmpty) {
+                                  awards = awards + firstresultController.text;
+                                }
+                                if (secondresultController.text.isNotEmpty) {
+                                  awards =
+                                      "${awards}_${secondresultController.text}";
+                                }
+                                if (thirdresultController.text.isNotEmpty) {
+                                  awards =
+                                      "${awards}_${thirdresultController.text}";
+                                }
+                                if (fourthresultController.text.isNotEmpty) {
+                                  awards =
+                                      "${awards}_${fourthresultController.text}";
+                                }
+                                if (fifthresultController.text.isNotEmpty) {
+                                  awards =
+                                      "${awards}_${fifthresultController.text}";
+                                }
+                                String injury = "";
+                                if (_isShoulderInjury) {
+                                  injury = "$injury肩部";
+                                }
+                                if (_isHandInjury) {
+                                  injury = "${injury}_手部";
+                                }
+                                if (_isWaistInjury) {
+                                  injury = "${injury}_腰部";
+                                }
+                                if (_isLegInjury) {
+                                  injury = "${injury}_腿膝部";
+                                }
+                                if (_isFootInjury) {
+                                  injury = "${injury}_脚部";
+                                }
+                                if (_isOtherInjury) {
+                                  injury = "${injury}_其他";
+                                }
+
+                                if (_isUploadAthletePhoto) {
+                                  //TODO：上传了运动员证书图片
+
+                                }
+                                if (_isUploadCoachPhoto) {
+                                  //TODO：上传了教练证书图片
+
+                                }
+                                if (_isUploadRefereePhoto) {
+                                  //TODO：上传了裁判员证书图片
+
+                                }
+                                // print(nameController.text);
+                                // print(_isMan);
+                                // print(birthday);
+                                // print(sport);
+                                // print(careerYear);
+                                // print(coachtype);
+                                // print(teamtype);
+                                // print(schoolController.text);
+                                // print(education);
+                                // print(locationController.text);
+                                // print(athletecertificate);
+                                // print(coachcertificate);
+                                // print(refereecertificate);
+                                // print(awards);
+                                // print(injury);
+
+                                coachInforUpdate(
+                                        nameController.text,
+                                        _isMan,
+                                        birthday,
+                                        sport,
+                                        careerYear,
+                                        coachtype,
+                                        teamtype,
+                                        schoolController.text,
+                                        education,
+                                        locationController.text,
+                                        athletecertificate,
+                                        coachcertificate,
+                                        refereecertificate,
+                                        awards,
+                                        injury)
+                                    .then((res) {
+                                  var code = res["code"];
+                                  var message = res["message"];
+                                  SmartDialog.dismiss(
+                                      status: SmartStatus.loading);
+                                  if (code == 200) {
+                                    //写入成功了
+                                    showmessage(msg: message, fontsize: 14.sp);
+                                    //Get.offNamed("/main");
+                                  } else {
+                                    //写入失败
+                                    showmessage(msg: message, fontsize: 14.sp);
+                                  }
+                                });
                               }
                             },
                             style: ButtonStyle(

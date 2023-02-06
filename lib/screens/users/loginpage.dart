@@ -2,7 +2,7 @@
  * @Author: YJR-1100
  * @Date: 2022-11-25 08:53:32
  * @LastEditors: IvanLiu
- * @LastEditTime: 2023-01-18 21:24:22
+ * @LastEditTime: 2023-02-06 23:22:38
  * @FilePath: \PE-Over-Cloud\Client\lib\screens\users\loginpage.dart
  * @Description: 登录页面
  * 
@@ -15,14 +15,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pe_over_cloud/config/peocdesign.dart';
 // ignore: depend_on_referenced_packages
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pe_over_cloud/utilities/storage.dart';
 import 'package:pe_over_cloud/widgets/PEOCButton.dart';
 import 'package:pe_over_cloud/widgets/PEOCText.dart';
 import 'package:pe_over_cloud/widgets/PEOCiconFont.dart';
 import 'package:pe_over_cloud/widgets/toastDialog.dart';
 import 'package:pe_over_cloud/utilities/user.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-// import 'package:get/get.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -31,8 +32,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // 维护单选状态
-  bool _checkboxSelected = true;
+  // 记住密码的选框
+  bool _rememberPwdSelected = true;
   // 维护手机号，密码的聚焦状态
   bool _phonefocus = true;
   bool _pwdfocus = false;
@@ -53,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
     // 这里可以设置输入框默认值
     phoneController.text = "";
     // phone输入框焦点
-    _focusNodephone.addListener(() {
+    _focusNodephone.addListener(() async {
       if (!_focusNodephone.hasFocus) {
         // 失去焦点
         setState(() {
@@ -63,6 +64,13 @@ class _LoginPageState extends State<LoginPage> {
           if (!isphonenum(phoneController.text)) {
             // 手机号格式不正确
             showmessage(msg: "手机号格式错误", fontsize: ScreenUtil().setSp(14));
+          } else {
+            //手机号正确，检查本地存储有没有保存密码
+            String? pwd = await getPwd(phoneController.text);
+            if (pwd.isNotEmpty) {
+              //有存过的密码
+              pwdController.text = pwd;
+            }
           }
         }
       } else {
@@ -289,13 +297,13 @@ class _LoginPageState extends State<LoginPage> {
                               height: 21.h,
                               width: 33.w,
                               child: Checkbox(
-                                value: _checkboxSelected,
+                                value: _rememberPwdSelected,
                                 activeColor: PEOCConfig.THEMECOLOR,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(4.w)),
                                 onChanged: (value) {
                                   setState(() {
-                                    _checkboxSelected = value!;
+                                    _rememberPwdSelected = value!;
                                   });
                                 },
                               ),
@@ -348,12 +356,32 @@ class _LoginPageState extends State<LoginPage> {
                           } else {
                             userPhonenumPwdLogin(
                                     phoneController.text, pwdController.text)
-                                .then((res) {
+                                .then((res) async {
                               var code = res["code"];
                               var message = res["message"];
                               SmartDialog.dismiss(status: SmartStatus.loading);
                               if (code == 200) {
+                                var data = res["data"];
+                                var token = data["access_token"];
+
+                                //存储token到本地
+                                storeLocalToken(token);
+                                // 存储当前登录账户
+                                storeCurrenLoginAccount(
+                                phoneController.text, pwdController.text);
+
+                                if (_rememberPwdSelected) {
+                                  //记住密码
+                                  storePwd(
+                                      phoneController.text, pwdController.text);
+                                } else {
+                                  //不记住密码，查一下本地记过没有，记过要删掉
+                                  deletePwd(phoneController.text);
+                                }
+
                                 showmessage(msg: "登录成功", fontsize: 14.sp);
+                                //周期性获得token，每过29min获取一次
+                                getTokenPeriodic(phoneController.text, pwdController.text);
                                 Get.offAllNamed('/usertype');
                               } else {
                                 showmessage(msg: message, fontsize: 14.sp);
@@ -477,7 +505,9 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                       height: 18.h,
                       child: PEOCButton.textButton(
-                        ontap: () {},
+                        ontap: () {
+                          Get.toNamed("/clause");
+                        },
                         text: PEOCText.easyText(
                             text: "登录软件视为您同意我们的服务条款",
                             fontsize: 12.sp,
@@ -487,12 +517,12 @@ class _LoginPageState extends State<LoginPage> {
                 ]),
               )),
         ));
+  }
 
-    @override
-    void dispose() {
-      phoneController.dispose();
-      pwdController.dispose();
-      super.dispose();
-    }
+  @override
+  void dispose() {
+    phoneController.dispose();
+    pwdController.dispose();
+    super.dispose();
   }
 }

@@ -41,6 +41,25 @@ dependencies:
   get:
   #获取本地图片
   wechat_assets_picker: ^8.3.1
+  # 视频播放
+  video_thumbnail: ^0.5.3
+  video_player: ^2.4.8
+  # 网络请求
+  http: ^0.13.5
+  dio: ^4.0.6
+  # 全屏
+  orientation: ^1.3.0
+  # 选项卡
+  contained_tab_bar_view: ^0.8.0
+  # 左滑删除
+  flutter_slidable: ^2.0.0
+  # 监听键盘
+  flutter_keyboard_visibility: ^5.4.0
+  # 聊天气泡
+  flutter_chat_bubble: ^2.0.0
+  chat_bubbles: ^1.4.1
+  # 聊天表情
+  emoji_picker_flutter: ^1.5.2
 
 dev_dependencies:
   flutter_test:
@@ -56,12 +75,8 @@ dev_dependencies:
   flutter_smart_dialog: ^3.3.0
   pin_code_fields: ^7.4.0
   flutter_swiper_view: ^1.1.8
-  video_player: ^2.4.8
   image_picker: ^0.8.6
   shared_preferences: ^2.0.15
-  http: ^0.13.5
-  dio: ^4.0.6
-  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -93,9 +108,29 @@ flutter:
       fonts:
         - asset: asset/font/SourceHanSansCN-Normal.ttf
 
+    - family: syhtRegularFamily
+      fonts:
+        - asset: asset/font/SourceHanSansCN-Regular.ttf
+
+    - family: syhtLightFamily
+      fonts:
+        - asset: asset/font/SourceHanSansCN-Light.ttf
+
+    - family: syhtExtraLightFamily
+      fonts:
+        - asset: asset/font/SourceHanSansCN-ExtraLight.ttf
+
     - family: syhtMediumFamily
       fonts:
         - asset: asset/font/SourceHanSansCN-Medium.ttf
+
+    - family: syhtBoldFamily
+      fonts:
+        - asset: asset/font/SourceHanSansCN-Bold.ttf
+
+    - family: syhtHeavyFamily
+      fonts:
+        - asset: asset/font/SourceHanSansCN-Heavy.ttf
 
     - family: ysbthFamily
       fonts:
@@ -104,7 +139,11 @@ flutter:
     - family: loginpageFont
       fonts:
         - asset: asset/font/loginpagefont.ttf
-    
+
+    - family: chaticonFont
+      fonts:
+        - asset: asset/font/chaticon.ttf
+
     - family: chachaFont
       fonts:
         - asset: asset/font/chacha.ttf

@@ -2,7 +2,7 @@
  * @Author: YJR-1100
  * @Date: 2022-11-24 22:34:27
  * @LastEditors: IvanLiu
- * @LastEditTime: 2023-01-18 20:54:34
+ * @LastEditTime: 2023-02-06 22:10:19
  * @FilePath: \PE-Over-Cloud\Client\lib\router\router.dart
  * @Description: 路由配置文件
  * 
@@ -30,4 +30,8 @@ List<GetPage> namedPages = [
   GetPage(name: '/athleteinfo', page: () => getathleteinfopage()),
   GetPage(name: '/coachinfo', page: () => getcoachinfopage()),
   GetPage(name: '/amateurinfo', page: () => getamateurinfopage()),
+  GetPage(name: '/videoplayer', page: () => getvideoplayerpage()),
+  GetPage(name: '/trainingroomsearch', page: () => gettrainingroomsearchpage()),
+  GetPage(name: '/traindata', page: () => getmytaindatapage()),
+  GetPage(name: '/trainingchat', page: () => gettraininggchatpage()),
 ];
